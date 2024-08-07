@@ -18,6 +18,19 @@ def server_registration(identifier):
 			return -1
 
 
+def server_unregistration(identifier):
+	with sqlite3.connect(location) as connection:
+		cursor = connection.cursor()
+		try:
+			with connection:
+				cursor.execute(f"""
+				DELETE FROM {table} WHERE server = "{identifier}";""")
+				return 0
+		except Exception as e:
+			print('DB Err? {}'.format(e))
+			return -1
+
+
 def upd_manage_role(identifier_server, identifier_role):
 	with sqlite3.connect(location) as connection:
 		cursor = connection.cursor()
