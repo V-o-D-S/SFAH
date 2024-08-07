@@ -14,12 +14,6 @@ class HostSystem(commands.Cog):
 			color=disnake.Colour.dark_red()
 		))
 
-	@commands.slash_command(name='sosat', description='Terpila')
-	async def echo(self, ctx: disnake.AppCmdInter, text: str):
-		channel = ctx.channel
-
-		await channel.send(text)
-
 
 def setup(bot):
 	bot.add_cog(HostSystem(bot))

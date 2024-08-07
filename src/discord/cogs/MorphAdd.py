@@ -6,6 +6,7 @@ import src.IDB.manage_morphs as manage_morph
 import src.IDB.manage_servers as manage_servers
 from src.config.commands import error_embed
 
+
 class MorphsAdd(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
@@ -13,9 +14,9 @@ class MorphsAdd(commands.Cog):
 	@commands.slash_command(name='morph_reg', description='Зарегистрировать морф в IDB')
 	async def reg(self, ctx: disnake.AppCmdInter):
 		role = manage_servers.get_manage_role(str(ctx.guild.id))
-		memb_role = ctx.author.get_role(int(role))
+		member_role = ctx.author.get_role(int(role))
 
-		if memb_role is None:
+		if member_role is None:
 			await ctx.send(embed=error_embed('Роль', 'У вас нет необходимой роли'))
 			return 0
 
@@ -78,11 +79,11 @@ class ModalMorph(disnake.ui.Modal):
 	async def callback(self, inter: disnake.ModalInteraction):
 		data = inter.text_values
 		data_send = {
-			'id': data['id'],
-			'morph': data['morph'],
+			'id':        data['id'],
+			'morph':     data['morph'],
 			'inspector': str(inter.author.id),
-			'bound': data['player'],
-			'photo': data['photo'],
+			'bound':     data['player'],
+			'photo':     data['photo'],
 			'structure': data['structure']
 		}
 		if manage_morph.add_morph(data_send) == 0:
@@ -93,6 +94,7 @@ class ModalMorph(disnake.ui.Modal):
 			))
 		else:
 			await inter.channel.send(embed=error_embed('IDB', 'Failed load morph', -1))
+
 
 def setup(bot):
 	bot.add_cog(MorphsAdd(bot))
